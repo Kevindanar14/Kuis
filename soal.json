@@ -1,0 +1,62 @@
+[
+  {
+    "pertanyaan": "Apa output dari print(2 + 3 * 4)?",
+    "opsi": ["20", "14", "24", "10"],
+    "jawaban_benar": "14",
+    "pembahasan": "Operator * memiliki prioritas lebih tinggi dari +, jadi 3*4=12, kemudian 2+12=14."
+  },
+  {
+    "pertanyaan": "Tipe data apa yang digunakan untuk menyimpan teks di Python?",
+    "opsi": ["int", "float", "str", "bool"],
+    "jawaban_benar": "str",
+    "pembahasan": "str adalah tipe data string yang digunakan untuk menyimpan teks."
+  },
+  {
+    "pertanyaan": "Fungsi apa yang digunakan untuk memasukkan input dari user di Python?",
+    "opsi": ["input()", "print()", "scan()", "read()"],
+    "jawaban_benar": "input()",
+    "pembahasan": "Fungsi input() digunakan untuk membaca input dari pengguna."
+  },
+  {
+    "pertanyaan": "Bagaimana cara membuat komentar satu baris di Python?",
+    "opsi": ["// komentar", "# komentar", "/* komentar */", "<!-- komentar -->"],
+    "jawaban_benar": "# komentar",
+    "pembahasan": "Komentar satu baris di Python menggunakan tanda #."
+  },
+  {
+    "pertanyaan": "Apa output dari kode berikut?\nprint(type(3.14))",
+    "opsi": ["<class 'int'>", "<class 'float'>", "<class 'str'>", "<class 'bool'>"],
+    "jawaban_benar": "<class 'float'>",
+    "pembahasan": "3.14 adalah bilangan desimal sehingga bertipe float."
+  },
+  {
+    "pertanyaan": "Apa hasil dari len('Python')?",
+    "opsi": ["5", "6", "7", "Error"],
+    "jawaban_benar": "6",
+    "pembahasan": "len menghitung jumlah karakter, 'Python' memiliki 6 karakter."
+  },
+  {
+    "pertanyaan": "Bagaimana cara membuat list kosong di Python?",
+    "opsi": ["{}", "[]", "()", "None"],
+    "jawaban_benar": "[]",
+    "pembahasan": "List kosong dibuat dengan tanda []"
+  },
+  {
+    "pertanyaan": "Apa output dari kode: print(10 // 3)?",
+    "opsi": ["3.33", "3", "4", "Error"],
+    "jawaban_benar": "3",
+    "pembahasan": "// adalah operator pembagian bulat, jadi hasilnya 3."
+  },
+  {
+    "pertanyaan": "Fungsi untuk mengubah string menjadi huruf kapital semua adalah?",
+    "opsi": ["upper()", "capitalize()", "lower()", "title()"],
+    "jawaban_benar": "upper()",
+    "pembahasan": "upper() mengubah semua huruf menjadi kapital."
+  },
+  {
+    "pertanyaan": "Bagaimana cara import modul math di Python?",
+    "opsi": ["include math", "import math", "using math", "require math"],
+    "jawaban_benar": "import math",
+    "pembahasan": "import math adalah sintaks untuk mengimpor modul math."
+  }
+]
