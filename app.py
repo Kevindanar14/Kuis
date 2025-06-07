@@ -10,6 +10,10 @@ st.set_page_config(page_title="Kuis Python Dasar")
 # ====== Gaya CSS Global ======
 st.markdown("""
     <style>
+        body {
+            color-scheme: light;
+        }
+            
         /* Background Global */
         html, body, [class*="css"]  {
             font-family: 'Poppins', sans-serif !important;
@@ -161,13 +165,13 @@ if 'page' not in st.session_state:
 if 'sudah_simpan' not in st.session_state:
     st.session_state.sudah_simpan = False
 
-TOTAL_WAKTU = 50  # detik
+TOTAL_WAKTU = 60 # detik
 
 # ====== Fungsi Mulai Kuis ======
 def mulai_kuis():
     nama_input = st.session_state.input_nama.strip()
     if nama_input == "":
-        st.warning("Nama tidak boleh kosong!")
+        st.warning("⚠ Nama tidak boleh kosong!")
         return False
     else:
         st.session_state.nama = nama_input
@@ -222,9 +226,10 @@ with st.sidebar:
 
 # ====== Fungsi Tiap Halaman ======
 def tampilkan_home():
-    st.title("🧠 Kuis Python Dasar")
-    st.markdown("### 🚀 Siap uji kemampuan Python kamu?")
-    st.image("https://media.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif", width=300)
+    st.title("Kuis Python Dasar ⚡")
+    st.markdown("###### Projek Program Komputer")
+    st.markdown("Oleh Kevin & Farrel")
+    st.image("https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3OWcxMXAzdWpkdXJzMXhxbnpocGM4MGF2M3RqMzk3enNrcTVnODJoaCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/y93slPbDMdeXJQONHa/giphy.gif", width=300)
     st.text_input("Masukkan nama kamu:", key="input_nama", value=st.session_state.nama)
     if st.button("🎯 Mulai Kuis"):
         if mulai_kuis():
@@ -232,7 +237,7 @@ def tampilkan_home():
 
 def tampilkan_kuis():
     if not st.session_state.mulai_quiz:
-        st.warning("Silakan mulai kuis dari halaman Home terlebih dahulu.")
+        st.warning("⚠ Silakan mulai kuis dari halaman Home terlebih dahulu.")
     else:
         waktu_terlewati = int(time.time() - st.session_state.start_time)
         sisa_waktu = TOTAL_WAKTU - waktu_terlewati
@@ -242,11 +247,17 @@ def tampilkan_kuis():
             st.session_state.submit = True
             st.session_state.mulai_quiz = False
             st.session_state.page = "Pembahasan"
+
+            # Tombol menuju leaderboard setelah waktu habis
+            if st.button("Yah, waktu habis"):
+                st.session_state.page = "Leaderboard"
+            return  # keluar agar tidak render bagian soal lagi
+
         else:
-            st.progress((TOTAL_WAKTU - sisa_waktu) / TOTAL_WAKTU)
+            st.title("📝 Selamat Mengerjakan!")
             menit = sisa_waktu // 60
             detik = sisa_waktu % 60
-            st.markdown(f"### ⏳ Sisa Waktu: `{menit:02d}:{detik:02d}`")
+            st.markdown(f"### ⏳ Waktu tersisa: {menit:02d}:{detik:02d}")
 
             for i, soal in enumerate(soal_list):
                 with st.container():
@@ -283,13 +294,14 @@ def tampilkan_kuis():
                 else:
                     st.session_state.submit = True
                     st.session_state.mulai_quiz = False
-                    st.session_state.page = "Pembahasan"
+                    st.session_state.page = "Pembahasan" 
 
 def tampilkan_pembahasan():
-    st.title("📖 Pembahasan Kuis Python Dasar")
     if not st.session_state.submit:
-        st.info("Silakan selesaikan kuis terlebih dahulu.")
+        st.info("⚠ Selesaikan kuis terlebih dahulu.")
+
     else:
+        st.title("📖 Pembahasan Kuis")
         benar = 0
         for i, soal in enumerate(soal_list):
             st.subheader(f"Soal {i+1}")
@@ -318,18 +330,21 @@ def tampilkan_pembahasan():
             simpan_ke_leaderboard(st.session_state.nama, benar, total_soal, persen)
             st.session_state.sudah_simpan = True
 
-        col1, col2 = st.columns(2)
+        col1, = st.columns(1)
         with col1:
             if st.button("Lihat Leaderboard"):
                 st.session_state.page = "Leaderboard"
-        with col2:
-            if st.button("🔄 Ulangi Kuis"):
-                reset_kuis()
-
 
 def tampilkan_leaderboard():
-    st.title("🏆 Leaderboard Kuis Python Dasar")
+    if not st.session_state.submit:
+        st.warning("⚠ Leaderboard hanya bisa diakses setelah menyelesaikan kuis dan melihat pembahasan.")
+        if st.button("Kembali ke Home"):
+            st.session_state.page = "Home"
+        return  # keluar dari fungsi jika belum menyelesaikan kuis
+
+    st.title("🏆 Leaderboard")
     file_path = "leaderboard.csv"
+
     if os.path.exists(file_path):
         df = pd.read_csv(file_path)
         if "skor" in df.columns:
@@ -341,6 +356,7 @@ def tampilkan_leaderboard():
                 "skor": "🏆 Skor",
                 "persentase": "📊 Persentase"
             }))
+            st.image("https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3eDZmYWs0djFxbjZscWY4bTNxNmJkOG10aTFnand6aXp4emZla3I3cCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/4Z0hDZQdWQYtG/giphy.gif", width=300)
         else:
             st.error("File leaderboard.csv tidak memiliki kolom 'skor'.")
     else:
